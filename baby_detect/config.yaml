@@ -1,0 +1,36 @@
+name: Baby Detect
+version: "1.0.0"
+slug: baby_detect
+description: Detects a baby in a UniFi Protect camera snapshot and reports it to a Home Assistant webhook
+arch:
+  - amd64
+  - aarch64
+startup: application
+boot: auto
+init: true
+options:
+  snapshot_url: null
+  unifi_api_key: ""
+  verify_ssl: false
+  ha_webhook_url: null
+  ha_verify_ssl: false
+  interval_seconds: 10
+  confidence: 0.4
+  frames_to_detect: 2
+  frames_to_clear: 3
+  heartbeat_seconds: 300
+  roi: ""
+  log_level: INFO
+schema:
+  snapshot_url: url
+  unifi_api_key: password?
+  verify_ssl: bool
+  ha_webhook_url: url
+  ha_verify_ssl: bool
+  interval_seconds: float(1,)
+  confidence: float(0.05,0.95)
+  frames_to_detect: int(1,)
+  frames_to_clear: int(1,)
+  heartbeat_seconds: float(30,)
+  roi: match(^$|^\s*[0-9.]+\s*,\s*[0-9.]+\s*,\s*[0-9.]+\s*,\s*[0-9.]+\s*$)?
+  log_level: list(DEBUG|INFO|WARNING|ERROR)

@@ -1,0 +1,37 @@
+configuration:
+  snapshot_url:
+    name: Snapshot URL
+    description: UniFi Protect integration API snapshot URL, or the camera's anonymous snap.jpeg URL.
+  unifi_api_key:
+    name: UniFi API key
+    description: Protect integration API key (sent as X-API-KEY). Leave empty for anonymous snapshots.
+  verify_ssl:
+    name: Verify UniFi SSL
+    description: Verify the UniFi console's certificate. Off for self-signed certificates.
+  ha_webhook_url:
+    name: Home Assistant webhook URL
+    description: Full webhook URL, e.g. http://homeassistant:8123/api/webhook/<webhook_id>.
+  ha_verify_ssl:
+    name: Verify Home Assistant SSL
+    description: Verify Home Assistant's certificate when the webhook URL uses https.
+  interval_seconds:
+    name: Check interval (seconds)
+    description: How often to fetch a snapshot and run detection.
+  confidence:
+    name: Confidence threshold
+    description: Minimum person confidence (0-1) to count as detected.
+  frames_to_detect:
+    name: Frames to detect
+    description: Consecutive detections needed before reporting a baby.
+  frames_to_clear:
+    name: Frames to clear
+    description: Consecutive empty frames needed before reporting no baby.
+  heartbeat_seconds:
+    name: Heartbeat (seconds)
+    description: Re-send the current state this often even if unchanged.
+  roi:
+    name: Region of interest
+    description: Optional crib area as image fractions "x1,y1,x2,y2" (0,0 is top-left). Empty uses the whole image.
+  log_level:
+    name: Log level
+    description: DEBUG logs every check.

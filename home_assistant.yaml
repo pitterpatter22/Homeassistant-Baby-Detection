@@ -1,0 +1,33 @@
+# The script POSTs the desired state on every change and as a heartbeat:
+#   {"detected": true|false, "confidence": 0.53}
+# Home Assistant must SET the state from that payload, never toggle it, so a
+# repeated message is harmless. Use ONE of the options below in configuration.yaml.
+
+# Option A (simplest): a template binary sensor driven by the webhook - no helper needed.
+template:
+  - triggers:
+      - trigger: webhook
+        webhook_id: baby-detect-change-me
+        allowed_methods: [POST]
+        local_only: true
+    binary_sensor:
+      - name: Baby Detected
+        unique_id: baby_detected
+        device_class: occupancy
+        state: "{{ trigger.json.detected }}"
+        attributes:
+          confidence: "{{ trigger.json.confidence }}"
+
+# Option B: keep an existing input_boolean helper (e.g. input_boolean.baby_detected).
+# automation:
+#   - alias: Baby detect webhook
+#     mode: queued
+#     triggers:
+#       - trigger: webhook
+#         webhook_id: baby-detect-change-me
+#         allowed_methods: [POST]
+#         local_only: true
+#     actions:
+#       - action: "input_boolean.turn_{{ 'on' if trigger.json.detected else 'off' }}"
+#         target:
+#           entity_id: input_boolean.baby_detected
